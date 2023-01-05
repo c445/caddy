@@ -71,10 +71,10 @@ func addHTTPVarsToReplacer(repl *caddy.Replacer, req *http.Request, w http.Respo
 			// request header fields
 			if strings.HasPrefix(key, reqHeaderReplPrefix) {
 				field := key[len(reqHeaderReplPrefix):]
-				vals := req.Header[textproto.CanonicalMIMEHeaderKey(field)]
+				vals, found := req.Header[textproto.CanonicalMIMEHeaderKey(field)]
 				// always return true, since the header field might
 				// be present only in some requests
-				return strings.Join(vals, ","), true
+				return strings.Join(vals, ","), found
 			}
 
 			// cookies
